@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nabila Rauqah — Personal Website (Single Page)</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Background default*/
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background-image: url('bg.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #212121; /* main text */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      max-width: 1100px;
+      width: 92%;
+      margin: 30px auto;
+      background: rgba(243, 229, 243, 0.95); 
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 22px;
+      background: #6A1B4D;/
+      color: #fff;
+    }
+
+    .top img.logo {
+      width: 120px;
+      height: auto;
+      border-radius: 0;
+      object-fit: contain;
+      border: none;
+    }
+
+    .top .title {
+      font-size: 1.35rem;
+      font-weight: bold;
+      letter-spacing: 0.6px;
+      align-items: center;
+    }
+
+    /* Navigation */
+    nav.mainnav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 18px;
+      background: #6A1B4D; 
+    }
+
+    nav.mainnav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all .18s ease;
+    }
+
+    nav.mainnav a:hover {
+      background: #F3E5F5; /
+      color: #6A1B4D;
+      transform: translateY(-2px);
+    }
+    nav.mainnav a.active {
+      background: #F3E5F5;
+      color: #6A1B4D;
+      box-shadow: 0 4px 10px rgba(0,0,0,.12);
+    }
+
+    /* link + kotak */
+    .layout {
+      display: flex;
+      gap: 22px;
+      padding: 22px;
+      align-items: flex-start;
+    }
+
+    /*utk link*/
+    .sidebar {
+      flex-basis: 260px;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, rgba(243, 229, 243, 0.95), rgba(243, 229, 243, 0.95)); /* soft lavender */
+      color: #212121;
+      padding: 18px;
+      border-radius: 10px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      height: fit-content;
+    }
+
+    .sidebar h3 { color: #6A1B4D; margin-bottom: 12px; font-size: 1.05rem; }
+    .sidebar p { font-size: 0.95rem; opacity: .95; margin-bottom: 10px; line-height: 1.4; }
+    .sidebar p.muted { color: #5D4037; }
+    .sidebar a.link {
+      color: #C2185B; 
+      text-decoration: none;
+      display: block;
+      margin: 6px 0;
+      padding: 8px;
+      border-radius: 6px;
+      word-break: break-word;
+      line-height: 1.3;
+    }
+    .sidebar a.link:hover { color: #fff; background: rgba(194, 24, 91, 0.2); text-decoration: underline; }
+
+    .main {
+      flex: 1;
+      background: rgba(255,255,255,0.98);
+      padding: 18px;
+      border-radius: 10px;
+      min-height: 320px;
+    }
+
+    section.content-section { display: none; }
+    section.content-section.active { display: block; animation: fadeIn .28s ease both; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: translateY(0) } }
+
+    .profile-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 10px auto 16px auto;
+      border: 4px solid #C2185B; /* accent border */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+    }
+
+    .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+    .bio-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .bio-table td { padding: 12px 10px; border-bottom: 1px solid #BDBDBD; vertical-align: top; }
+    .bio-table td.label { font-weight: 700; color: #6A1B4D; width: 160px; }
+    .bio-table a { color: #6A1B4D; text-decoration: none; }
+    .bio-table a:hover { text-decoration: underline; }
+
+    /* hobbies list */
+    .hobby-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; margin-top: 12px; }
+    .hobby-card {
+      background: #FFFFFF; 
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .hobby-card h4 { color: #6A1B4D; margin-bottom: 6px; }
+
+    /* campus */
+    .memory-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; margin-top: 12px; }
+    .memory {
+      background: #FFFFFF; 
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .memory .mem-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* footer */
+    .page-footer {
+      text-align: center;
+      padding: 14px;
+      background: #6A1B4D;
+      color: #fff;
+      margin-top: 14px;
+    }
+
+    /* medium and small screens */
+    @media (max-width: 860px) {
+      .layout { flex-direction: column; padding: 14px; }
+      nav.mainnav { flex-wrap: wrap; gap: 8px; }
+      .sidebar { 
+        order: 2; 
+        width: 100%;
+      }
+      .main { order: 1; }
+      .top { gap: 12px; padding: 12px; }
+    }
+
+    /* helper small spacing */
+    .muted { color: #5D4037; font-size: .95rem; }
+    .spacer { height: 8px; }
+
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- TOP BAR -->
+    <div class="top">
+      <img class="logo" src="Logo UTHM.png" alt="Logo">
+      <div class="title">WEB DEVELOPMENT</div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="mainnav" aria-label="Main navigation">
+      <a href="#home" data-target="home" class="active">Home</a>
+      <a href="#biodata" data-target="biodata">Profile</a>
+      <a href="#hobbies" data-target="hobbies">Hobbies</a>
+      <a href="#campus" data-target="campus">Campus Life</a>
+    </nav>
+
+    <!-- MAIN LAYOUT -->
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" aria-label="Sidebar">
+        <h3>Quick Links</h3>
+        <p class="muted">To learn more about UTHM, click below link:</p>
+        <a class="link" href="https://ptta.uthm.edu.my" target="_blank">PTTA (UTHM Library)</a>
+        <a class="link" href="https://fsktm.uthm.edu.my" target="_blank">FSKTM</a>
+        <a class="link" href="https://amo.uthm.edu.my" target="_blank">PPA</a>
+
+        <div class="spacer"></div>
+        <h3>Contact</h3>
+        <p class="muted">Email:</p>
+        <p><a>AI230055@student.uthm.edu.my</a></p>
+        <p class="muted">Phone:</p>
+        <p>012-3456789</p>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main" role="main">
+
+        <!-- HOME -->
+        <section id="home" class="content-section active" aria-labelledby="homeHeading">
+          <h2 id="homeHeading">Welcome!</h2>
+          <div class="profile-circle">
+            <img src="GambarIDK.png" alt="Profile picture">
+          </div>
+          <p style="text-align:center; max-width:780px; margin: 0 auto 8px auto;">
+            Hello! I'm <strong>Nabila Rauqah</strong>, a Year 3 Software Engineering student at Universiti Tun Hussein Onn Malaysia (UTHM).  
+            This is my personal information website.
+          </p>
+          <p class="muted" style="text-align:center;">Use the navigation above to explore.</p>
+        </section>
+
+        <!-- PROFILE -->
+        <section id="biodata" class="content-section" aria-labelledby="biodataHeading">
+          <h2 id="biodataHeading">Biodata</h2>
+
+          <div style="max-width:900px; margin: 20px auto;">
+            <table class="bio-table" role="table" aria-label="Biodata table">
+              <tr><td class="label">Full Name</td><td>Nabila Rauqah Binti Sukaini</td></tr>
+              <tr><td class="label">Date of Birth</td><td>13 May 2004</td></tr>
+              <tr><td class="label">Phone</td><td>012-3456789</td></tr>
+              <tr><td class="label">Address</td><td>Batu Pahat, Johor</td></tr>
+              <tr><td class="label">Matric No</td><td>AI230055</td></tr>
+              <tr><td class="label">Program</td><td>Bachelor of Computer Science (Software Engineering)</td></tr>
+              <tr><td class="label">Year</td><td>Year 3 BIP</td></tr>
+              <tr><td class="label">Email</td><td><a>AI230055@student.uthm.edu.my</a></td></tr>
+            </table>
+          </div>
+
+          <p class="muted" style="margin-top:20px;">Short bio:</p>
+          <p style="margin-top: 8px;">I have a beginner leve skills in programming and my 2025 wishlist is to complete my PSM successfully.</p>
+        </section>
+
+        <!-- HOBBIES -->
+        <section id="hobbies" class="content-section" aria-labelledby="hobbiesHeading">
+          <h2 id="hobbiesHeading">Hobbies</h2>
+
+          <div class="hobby-list">
+            <div class="hobby-card">
+              <h4>📚 Reading</h4>
+              <p>I read science fiction and fantasy novels to learn and broaden my thoughts.</p>
+            </div>
+
+            <div class="hobby-card">
+              <h4>🏸 Badminton</h4>
+              <p>Playing badminton keeps me active and helps me bond with family on weekends.</p>
+            </div>
+
+            <div class="hobby-card">
+              <h4>🎮 Gaming</h4>
+              <p>I like adventure games as it help with problem solving and creativity.</p>
+            </div>
+
+            <div class="hobby-card">
+              <h4>📺 Watching Movies</h4>
+              <p>I like to watch movies during my leisure times and interpret the story based on my understanding.</p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- CAMPUS LIFE -->
+        <section id="campus" class="content-section" aria-labelledby="campusHeading">
+          <h2 id="campusHeading">Campus Life</h2>
+          <p class="muted">My memorable moments at university.</p>
+
+          <div class="memory-list">
+
+            <article class="memory" aria-labelledby="m1">
+              <h4 id="m1">🎓 First Day at UTHM — 2 Oct 2023</h4>
+              <img src="first.jpg" alt="First day at UTHM" class="mem-img">
+              <p>I met new friends from different states and experienced the orientation activities.</p>
+            </article>
+
+            <article class="memory" aria-labelledby="m2">
+              <h4 id="m2">🎉 Hari Raya Celebration — 12 Apr 2025</h4>
+              <img src="food.jpg" alt="Hari Raya celebration" class="mem-img">
+              <p>Classmates gathered at a house and shared traditional food together.</p>
+            </article>
+
+            <article class="memory" aria-labelledby="m3">
+              <h4 id="m3">🏆 Innovation Competition — 21 May 2025</h4>
+              <img src="inno.jpg" alt="Innovation competition" class="mem-img">
+              <p>We presented our project and won an award. It is a great learning experience.</p>
+            </article>
+
+            <article class="memory" aria-labelledby="m4">
+              <h4 id="m4">🌊 Industry Visit at TRX — 29 Oct 2025</h4>
+              <img src="industrialVisit.jpg" alt="Industry visit" class="mem-img">
+              <p>Visited a company at TRX Exchange to learn about 5G and technology.</p>
+            </article>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+      &copy; 2025 Nabila Rauqah — Created for BIC21203 Web Development
+    </div>
+
+  </div>
+
+  <!-- ----------------- JS: navigation (single page) ----------------- -->
+  <script>
+    const navLinks = document.querySelectorAll('nav.mainnav a');
+    const sections = document.querySelectorAll('section.content-section');
+
+    function showSectionById(id) {
+      sections.forEach(s => s.classList.remove('active'));
+      navLinks.forEach(l => l.classList.remove('active'));
+
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.add('active');
+
+      const link = Array.from(navLinks).find(a => a.dataset.target === id);
+      if (link) link.classList.add('active');
+
+      history.replaceState(null, '', '#' + id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = a.dataset.target;
+        showSectionById(target);
+      });
+    });
+
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        showSectionById(hash);
+      }
+    });
+  </script>
+
+</body>
+</html>
